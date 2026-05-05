@@ -10,7 +10,7 @@ const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef(null);
 
-  const roles = ['Full Stack Developer', 'UI/UX Enthusiast', 'Problem Solver', 'Creative Coder'];
+  const roles = ['Full Stack Developer', 'MERN Expert', 'UI/UX Designer', 'Problem Solver'];
   
   // Parallax scroll effects
   const { scrollYProgress } = useScroll({
@@ -19,8 +19,9 @@ const Hero = () => {
   });
   
   const yText = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const yStars = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const yStars = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const opacityStars = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scaleStars = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
   
   // Mouse tracking for 3D effect
   const springConfig = { damping: 25, stiffness: 300 };
@@ -86,12 +87,14 @@ const Hero = () => {
     }
   };
 
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+  const particles = Array.from({ length: 50 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    duration: Math.random() * 20 + 10
+    size: Math.random() * 4 + 1,
+    duration: Math.random() * 30 + 15,
+    delay: Math.random() * 5,
+    color: ['#3b82f6', '#8b5cf6', '#10b981'][Math.floor(Math.random() * 3)]
   }));
 
   return (
@@ -129,8 +132,9 @@ const Hero = () => {
             Full Stack Developer | Data Analyst
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12 font-medium">
-            Building scalable web applications and transforming data into actionable insights.
-            Passionate about creating innovative solutions that bridge the gap between complex technology and real-world business needs.
+            Full Stack MERN Developer with hands-on experience building scalable web applications and RESTful APIs.
+            Currently developing enterprise solutions at Prushal Technology with expertise in React.js, Node.js, Express.js, and MongoDB.
+            Strong foundation in Data Structures, DBMS, and certified in Generative AI fundamentals.
           </p>
         </motion.div>
 

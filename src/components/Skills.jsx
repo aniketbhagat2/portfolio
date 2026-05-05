@@ -2,26 +2,40 @@ import { motion } from 'framer-motion';
 
 const Skills = () => {
   const skills = {
-    "Frontend": [
-      { name: "React", level: "Expert", icon: "⚛️", description: "Advanced React patterns, Hooks, Context API" },
-      { name: "TypeScript", level: "Advanced", icon: "📘", description: "Type-safe development, interfaces, generics" },
-      { name: "Tailwind CSS", level: "Expert", icon: "🎨", description: "Responsive design, custom components" },
-      { name: "Next.js", level: "Advanced", icon: "▲", description: "SSR, SSG, API routes, middleware" },
-      { name: "Vue.js", level: "Intermediate", icon: "💚", description: "Vue 3, Composition API, Vuex" }
+    "Programming Languages": [
+      { name: "JavaScript", level: "Expert", icon: "🟨", description: "ES6+, async/await, modern patterns" },
+      { name: "Python", level: "Advanced", icon: "�", description: "Data analysis, automation, scripting" },
+      { name: "HTML/CSS", level: "Expert", icon: "�", description: "Semantic HTML5, Ant Design, Tailwind CSS" }
     ],
-    "Backend": [
-      { name: "Node.js", level: "Expert", icon: "🟢", description: "Express, REST APIs, middleware" },
-      { name: "Python", level: "Advanced", icon: "🐍", description: "Django, FastAPI, data analysis" },
-      { name: "PostgreSQL", level: "Advanced", icon: "🐘", description: "Complex queries, optimization, indexing" },
-      { name: "MongoDB", level: "Advanced", icon: "🍃", description: "Aggregation pipelines, schema design" },
-      { name: "GraphQL", level: "Intermediate", icon: "📊", description: "Apollo Server, schema design" }
+    "Frontend Development": [
+      { name: "React.js", level: "Expert", icon: "⚛️", description: "Hooks, Context API, component architecture" },
+      { name: "Node.js", level: "Expert", icon: "🟢", description: "Express.js, RESTful APIs, middleware" },
+      { name: "JWT Authentication", level: "Advanced", icon: "�", description: "Secure authentication, authorization systems" }
     ],
-    "Tools & Others": [
-      { name: "Git", level: "Expert", icon: "📦", description: "Version control, branching strategies" },
-      { name: "Docker", level: "Advanced", icon: "🐳", description: "Containerization, Docker Compose" },
-      { name: "AWS", level: "Intermediate", icon: "☁️", description: "EC2, S3, Lambda, CloudFront" },
-      { name: "Figma", level: "Advanced", icon: "🎯", description: "UI/UX design, prototyping" },
-      { name: "Jest", level: "Advanced", icon: "🧪", description: "Unit testing, integration testing" }
+    "Databases & Analytics": [
+      { name: "MongoDB", level: "Advanced", icon: "🍃", description: "MERN stack, aggregation pipelines" },
+      { name: "MySQL", level: "Advanced", icon: "�", description: "Relational database design, optimization" },
+      { name: "Tableau", level: "Intermediate", icon: "📊", description: "Data visualization, dashboard creation" },
+      { name: "PowerBI", level: "Intermediate", icon: "�", description: "Business intelligence, reporting" }
+    ],
+    "Tools & Technologies": [
+      { name: "Git/GitHub", level: "Expert", icon: "📦", description: "Version control, collaboration, CI/CD" },
+      { name: "Excel", level: "Advanced", icon: "📊", description: "Data analysis, pivot tables, formulas" },
+      { name: "Figma", level: "Intermediate", icon: "🎨", description: "UI/UX design, prototyping, wireframing" }
+    ],
+    "Core Concepts": [
+      { name: "Data Structures & Algorithms", level: "Advanced", icon: "🧮", description: "Problem solving, optimization" },
+      { name: "OOP", level: "Advanced", icon: "🏗️", description: "Object-oriented programming principles" },
+      { name: "DBMS", level: "Advanced", icon: "🗄️", description: "Database management systems" },
+      { name: "MVC Architecture", level: "Advanced", icon: "🏛️", description: "Model-View-Controller pattern" },
+      { name: "API Integration", level: "Expert", icon: "🔌", description: "RESTful APIs, third-party integrations" },
+      { name: "SDLC", level: "Advanced", icon: "🔄", description: "Software Development Lifecycle" }
+    ],
+    "Soft Skills": [
+      { name: "Leadership", level: "Expert", icon: "👥", description: "Team management, project coordination" },
+      { name: "Public Speaking", level: "Advanced", icon: "�", description: "Presentations, technical communication" },
+      { name: "Time Management", level: "Expert", icon: "⏰", description: "Project planning, deadline management" },
+      { name: "Community Management", level: "Advanced", icon: "🌟", description: "User engagement, community building" }
     ]
   };
 

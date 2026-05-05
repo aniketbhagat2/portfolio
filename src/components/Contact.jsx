@@ -60,7 +60,7 @@ const Contact = () => {
     {
       icon: <FaMapMarkerAlt className="text-2xl text-red-400" />,
       title: "Location",
-      value: "Pune, Maharashtra",
+      value: "Ujjain, Madhya Pradesh",
       href: "#"
     }
   ];
