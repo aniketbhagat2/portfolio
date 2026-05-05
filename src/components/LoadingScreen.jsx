@@ -79,7 +79,7 @@ const LoadingScreen = () => {
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full"
             />
-            <span className="text-sm">Loading amazing content...</span>
+            <span className="text-sm">Loading Aniket's portfolio...</span>
           </div>
         </motion.div>
       </div>
