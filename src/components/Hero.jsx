@@ -118,20 +118,19 @@ const Hero = () => {
           </h1>
         </motion.div>
 
-        {/* Clean typing animation */}
+        {/* Professional headline and tagline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mb-8"
         >
-          <h2 className="text-2xl md:text-3xl text-gray-200 mb-4 font-medium">
-            <span className="text-blue-400">{text}</span>
-            <span className="text-blue-400 animate-pulse">|</span>
+          <h2 className="text-3xl md:text-4xl text-gray-200 mb-4 font-bold">
+            Full Stack Developer | Data Analyst
           </h2>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed mb-12">
-            Passionate about creating beautiful, functional web applications that make a difference.
-            I love working with modern technologies and solving complex problems based in Pune, Maharashtra.
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12 font-medium">
+            Building scalable web applications and transforming data into actionable insights.
+            Passionate about creating innovative solutions that bridge the gap between complex technology and real-world business needs.
           </p>
         </motion.div>
 
@@ -143,23 +142,24 @@ const Hero = () => {
           className="flex flex-col sm:flex-row gap-4 justify-center mt-8 mb-12"
         >
           <motion.a
-            href="#contact"
+            href="/resume.pdf"
+            download
+            target="_blank"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            className="professional-button bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 font-semibold focus-ring"
+            className="professional-button bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 font-semibold focus-ring flex items-center justify-center gap-2"
           >
-            Get In Touch
+            <FaDownload />
+            View Resume
           </motion.a>
           
           <motion.a
-            href="/resume.pdf"
-            download
+            href="#projects"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            className="professional-button border-2 border-gray-600 hover:border-gray-500 hover:bg-gray-800 text-gray-300 px-8 py-3 font-semibold flex items-center justify-center gap-2 focus-ring"
+            className="professional-button border-2 border-gray-600 hover:border-gray-500 hover:bg-gray-800 text-gray-300 px-8 py-3 font-semibold focus-ring"
           >
-            <FaDownload />
-            Download CV
+            View Projects
           </motion.a>
         </motion.div>
 

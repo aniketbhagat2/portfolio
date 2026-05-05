@@ -3,6 +3,7 @@ import AnimatedBackground from './components/AnimatedBackground';
 import Contact from './components/Contact';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
+import PatentAchievement from './components/PatentAchievement';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 
@@ -15,6 +16,7 @@ function App() {
         <main>
           <Hero />
           <About />
+          <PatentAchievement />
           <Projects />
           <Skills />
           <Contact />

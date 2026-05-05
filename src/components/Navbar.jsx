@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FaBars, FaGithub, FaLinkedin, FaTimes, FaTwitter } from 'react-icons/fa';
+import { FaBars, FaDownload, FaGithub, FaLinkedin, FaTimes, FaTwitter } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +49,17 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
+            <motion.a
+              href="/resume.pdf"
+              download
+              target="_blank"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all duration-200"
+            >
+              <FaDownload size={14} />
+              Resume
+            </motion.a>
             <motion.a
               href="https://github.com/aniketbhagat2"
               target="_blank"
@@ -106,6 +117,19 @@ const Navbar = () => {
                 {item}
               </a>
             ))}
+            <div className="pt-4 border-t border-gray-700">
+              <motion.a
+                href="/resume.pdf"
+                download
+                target="_blank"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium text-center transition-all duration-200"
+                onClick={() => setIsOpen(false)}
+              >
+                Download Resume
+              </motion.a>
+            </div>
           </motion.div>
         )}
       </div>

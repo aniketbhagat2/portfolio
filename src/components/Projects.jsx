@@ -10,7 +10,10 @@ const Projects = () => {
     {
       id: 1,
       title: "E-Commerce Platform",
-      description: "A full-stack e-commerce solution with payment integration, user authentication, and admin dashboard.",
+      problem: "Small businesses needed an affordable way to sell online without technical expertise",
+      solution: "Built a complete e-commerce solution with intuitive admin panel and secure payment processing",
+      implementation: "Developed full-stack architecture with React frontend, Node.js API, MongoDB database, and Stripe payment integration. Implemented JWT authentication, real-time inventory management, and responsive design.",
+      outcome: "Enabled 50+ small businesses to launch online stores with 40% increase in sales efficiency",
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600",
       technologies: ["React", "Node.js", "MongoDB", "Stripe"],
       liveUrl: "https://example.com",
@@ -20,7 +23,10 @@ const Projects = () => {
     {
       id: 2,
       title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+      problem: "Remote teams struggled with project coordination and task visibility",
+      solution: "Created a collaborative task management platform with real-time synchronization",
+      implementation: "Built using React with Firebase for real-time database, implemented drag-and-drop functionality, team collaboration features, and progress tracking with visual analytics.",
+      outcome: "Improved team productivity by 35% and reduced project delays by 25%",
       image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600",
       technologies: ["React", "Firebase", "Tailwind CSS", "Framer Motion"],
       liveUrl: "https://example.com",
@@ -30,7 +36,10 @@ const Projects = () => {
     {
       id: 3,
       title: "Weather Dashboard",
-      description: "A beautiful weather dashboard with location-based forecasts, interactive maps, and detailed weather analytics.",
+      problem: "Users needed accurate, location-based weather information with historical data analysis",
+      solution: "Developed a comprehensive weather analytics dashboard with forecasting capabilities",
+      implementation: "Integrated multiple weather APIs, built interactive maps using Chart.js, implemented geolocation services, and created 7-day forecasting with weather alerts system.",
+      outcome: "Served 10,000+ users with 99.9% uptime and accurate weather predictions",
       image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=600",
       technologies: ["Vue.js", "Weather API", "Chart.js", "Geolocation"],
       liveUrl: "https://example.com",
@@ -40,7 +49,10 @@ const Projects = () => {
     {
       id: 4,
       title: "Social Media Analytics",
-      description: "Analytics dashboard for social media management with data visualization, scheduling, and performance tracking.",
+      problem: "Marketing teams lacked comprehensive tools to measure social media ROI",
+      solution: "Built an analytics dashboard for social media management with data visualization",
+      implementation: "Developed using React with D3.js for data visualization, Express backend with PostgreSQL, implemented post scheduling, performance metrics tracking, and automated report generation.",
+      outcome: "Increased social media engagement by 45% and reduced reporting time by 60%",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600",
       technologies: ["React", "D3.js", "Express", "PostgreSQL"],
       liveUrl: "https://example.com",
@@ -50,7 +62,10 @@ const Projects = () => {
     {
       id: 5,
       title: "Video Streaming Platform",
-      description: "A video streaming platform with adaptive bitrate streaming, user recommendations, and content management.",
+      problem: "Content creators needed an affordable platform to host and monetize video content",
+      solution: "Created a scalable video streaming platform with adaptive bitrate technology",
+      implementation: "Built on Next.js with AWS for video processing, implemented WebRTC for live streaming, Redis for caching, and AI-powered recommendation engine for content discovery.",
+      outcome: "Supported 1000+ content creators with 500,000+ video views monthly",
       image: "https://images.unsplash.com/photo-1574375927936-d5a98e8ffe85?w=600",
       technologies: ["Next.js", "AWS", "WebRTC", "Redis"],
       liveUrl: "https://example.com",
@@ -60,7 +75,10 @@ const Projects = () => {
     {
       id: 6,
       title: "AI Chat Application",
-      description: "An intelligent chat application powered by AI with natural language processing and smart responses.",
+      problem: "Customer service teams needed efficient ways to handle common queries",
+      solution: "Developed an intelligent chat application with AI-powered responses",
+      implementation: "Integrated OpenAI API for natural language processing, built real-time chat using Socket.io, implemented conversation history, and multi-language support with Node.js backend.",
+      outcome: "Reduced customer response time by 70% and improved satisfaction scores by 40%",
       image: "https://images.unsplash.com/photo-1531297484010-80022131f5a1?w=600",
       technologies: ["React", "OpenAI API", "Socket.io", "Node.js"],
       liveUrl: "https://example.com",
@@ -168,9 +186,20 @@ const Projects = () => {
                   {project.title}
                 </motion.h3>
                 
-                <p className="text-gray-300 text-sm mb-4 line-clamp-2">
-                  {project.description}
-                </p>
+                <div className="text-gray-300 text-sm mb-4 space-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="text-blue-400 font-semibold">Problem:</span>
+                    <span className="line-clamp-2">{project.problem}</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-green-400 font-semibold">Solution:</span>
+                    <span className="line-clamp-2">{project.solution}</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-purple-400 font-semibold">Outcome:</span>
+                    <span className="line-clamp-1 font-medium">{project.outcome}</span>
+                  </div>
+                </div>
                 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.slice(0, 3).map((tech, index) => (
@@ -267,7 +296,32 @@ const Projects = () => {
             </div>
             <div className="p-8">
               <h3 className="text-3xl font-bold mb-4">{selectedProject.title}</h3>
-              <p className="text-gray-300 mb-6">{selectedProject.description}</p>
+              
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-2 text-blue-400">Problem Statement</h4>
+                    <p className="text-gray-300">{selectedProject.problem}</p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold mb-2 text-green-400">Solution</h4>
+                    <p className="text-gray-300">{selectedProject.solution}</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-2 text-purple-400">Implementation</h4>
+                    <p className="text-gray-300">{selectedProject.implementation}</p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold mb-2 text-yellow-400">Outcome</h4>
+                    <p className="text-gray-300 font-medium">{selectedProject.outcome}</p>
+                  </div>
+                </div>
+              </div>
               
               <div className="mb-6">
                 <h4 className="text-xl font-semibold mb-3">Technologies Used</h4>
@@ -309,7 +363,7 @@ const Projects = () => {
                   className="glass-effect px-6 py-3 rounded-full font-semibold hover:bg-white/20 transition-colors duration-300 inline-flex items-center gap-2"
                 >
                   <FaGithub />
-                  View Code
+                  GitHub Repo
                 </a>
               </div>
             </div>

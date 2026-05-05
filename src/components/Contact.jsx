@@ -40,6 +40,18 @@ const Contact = () => {
       href: "mailto:bhagataniket11@gmail.com"
     },
     {
+      icon: <FaGithub className="text-2xl text-gray-400" />,
+      title: "GitHub",
+      value: "github.com/aniketbhagat2",
+      href: "https://github.com/aniketbhagat2"
+    },
+    {
+      icon: <FaLinkedin className="text-2xl text-blue-500" />,
+      title: "LinkedIn",
+      value: "linkedin.com/in/aniketbhagat16",
+      href: "https://linkedin.com/in/aniketbhagat16"
+    },
+    {
       icon: <FaPhone className="text-2xl text-green-400" />,
       title: "Phone",
       value: "+91 9644029869",
@@ -117,14 +129,29 @@ const Contact = () => {
                 <motion.a
                   key={index}
                   href={info.href}
-                  whileHover={{ scale: 1.05, x: 10 }}
-                  className="flex items-center space-x-4 p-4 glass-effect rounded-lg hover:bg-white/15 transition-all duration-300"
+                  target={info.title === 'GitHub' || info.title === 'LinkedIn' ? '_blank' : undefined}
+                  rel={info.title === 'GitHub' || info.title === 'LinkedIn' ? 'noopener noreferrer' : undefined}
+                  whileHover={{ scale: 1.02, x: 5 }}
+                  className="flex items-center space-x-4 p-4 glass-effect rounded-lg hover:bg-white/15 transition-all duration-300 group"
                 >
-                  {info.icon}
-                  <div>
-                    <div className="font-semibold">{info.title}</div>
-                    <div className="text-gray-400">{info.value}</div>
+                  <div className="flex-shrink-0">
+                    {info.icon}
                   </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-200">
+                      {info.title}
+                    </div>
+                    <div className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-200">
+                      {info.value}
+                    </div>
+                  </div>
+                  {(info.title === 'GitHub' || info.title === 'LinkedIn') && (
+                    <div className="text-gray-500 group-hover:text-gray-300 transition-colors duration-200">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </div>
+                  )}
                 </motion.a>
               ))}
             </div>
