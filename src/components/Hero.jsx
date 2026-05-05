@@ -98,7 +98,7 @@ const Hero = () => {
   }));
 
   return (
-    <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative">
+    <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative pt-16">
       {/* Main content */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -113,11 +113,13 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8"
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight">
-            <span className="text-gray-300 font-light">Hi, I'm</span>{' '}
-            <span className="gradient-text font-bold">
-              Aniket Bhagat
-            </span>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 md:mb-8 tracking-tight">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
+              <span className="text-gray-300 font-light">Hi, I'm</span>
+              <span className="gradient-text font-bold">
+                Aniket Bhagat
+              </span>
+            </div>
           </h1>
         </motion.div>
 
