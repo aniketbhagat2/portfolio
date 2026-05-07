@@ -1,126 +1,112 @@
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+
+const navLinks = [
+  { label: 'About', id: 'about' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Certifications', id: 'certifications' },
+  { label: 'Contact', id: 'contact' },
+];
+
+const socials = [
+  { icon: <FaGithub size={16} />, href: 'https://github.com/aniketbhagat2', label: 'GitHub' },
+  { icon: <FaLinkedin size={16} />, href: 'https://linkedin.com/in/aniketbhagat16', label: 'LinkedIn' },
+  { icon: <FaEnvelope size={16} />, href: 'mailto:bhagataniket11@gmail.com', label: 'Email' },
+];
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
-  const socialLinks = [
-    {
-      icon: <FaGithub className="text-xl" />,
-      href: "https://github.com/aniketbhagat2",
-      label: "GitHub"
-    },
-    {
-      icon: <FaLinkedin className="text-xl" />,
-      href: "https://linkedin.com/in/aniketbhagat16",
-      label: "LinkedIn"
-    },
-    {
-      icon: <FaEnvelope className="text-xl" />,
-      href: "mailto:bhagataniket11@gmail.com",
-      label: "Email"
-    }
-  ];
+  const scrollTo = id => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <footer className="bg-gray-900/95 backdrop-blur-sm border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-              Aniket Bhagat
-            </h3>
-            <p className="text-gray-300 mb-4 leading-relaxed">
-              Full Stack MERN Developer passionate about building scalable web applications 
-              and innovative IoT solutions. Currently developing enterprise solutions at Prushal Technology.
+    <footer
+      className="border-t py-12 px-4"
+      style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.3)' }}
+    >
+      <div className="max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-10 mb-10">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-black"
+                style={{ background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }}
+              >
+                AB
+              </div>
+              <span className="text-sm font-semibold text-white">Aniket Bhagat</span>
+            </div>
+            <p className="text-xs text-zinc-500 leading-relaxed mb-4 max-w-xs">
+              Full Stack MERN Developer building scalable web applications and SaaS products.
+              Currently at Prushal Technology, Pune.
             </p>
-            <div className="flex gap-4">
-              {socialLinks.map((link, index) => (
+            <div className="flex gap-3">
+              {socials.map(s => (
                 <motion.a
-                  key={index}
-                  href={link.href}
-                  aria-label={link.label}
+                  key={s.label}
+                  href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-blue-400 transition-colors duration-300 border border-gray-700 hover:border-blue-500/50"
+                  aria-label={s.label}
+                  whileHover={{ y: -2, scale: 1.1 }}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-500 hover:text-white transition-colors"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                 >
-                  {link.icon}
+                  {s.icon}
                 </motion.a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
+          <div>
+            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Navigation</h4>
             <ul className="space-y-2">
-              {['About', 'Experience', 'Projects', 'Skills', 'Education', 'Contact'].map((item) => (
-                <li key={item}>
-                  <motion.a
-                    href={`#${item.toLowerCase()}`}
-                    className="text-gray-400 hover:text-blue-400 transition-colors duration-300 flex items-center gap-2"
-                    whileHover={{ x: 5 }}
+              {navLinks.map(link => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => scrollTo(link.id)}
+                    className="text-sm text-zinc-500 hover:text-white transition-colors duration-200"
                   >
-                    <span className="w-1 h-1 bg-blue-400 rounded-full"></span>
-                    {item}
-                  </motion.a>
+                    {link.label}
+                  </button>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h4 className="text-lg font-semibold text-white mb-4">Contact Info</h4>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-gray-400">
-                <FaEnvelope className="text-blue-400" />
-                <span className="text-sm">bhagataniket11@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-400">
-                <FaPhone className="text-green-400" />
-                <span className="text-sm">+91 9644029869</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-400">
-                <FaMapMarkerAlt className="text-red-400" />
-                <span className="text-sm">Ujjain, Madhya Pradesh</span>
-              </div>
+          {/* Contact */}
+          <div>
+            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Get In Touch</h4>
+            <div className="space-y-2">
+              <p className="text-sm text-zinc-500">bhagataniket11@gmail.com</p>
+              <p className="text-sm text-zinc-500">Pune, Maharashtra</p>
+              <p className="text-sm text-zinc-500">Open to relocation</p>
+              <a
+                href="/Resume.pdf"
+                download
+                target="_blank"
+                className="btn-primary inline-flex text-xs py-2 px-4 mt-3"
+              >
+                Download Resume
+              </a>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="pt-8 border-t border-gray-800"
+        {/* Bottom bar */}
+        <div
+          className="pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-3"
+          style={{ borderColor: 'rgba(255,255,255,0.06)' }}
         >
-          <div className="flex justify-center items-center">
-            <p className="text-gray-400 text-sm text-center">
-              © {currentYear} Aniket Bhagat. All rights reserved.
-            </p>
-          </div>
-        </motion.div>
+          <p className="text-xs text-zinc-600">© {year} Aniket Bhagat · All rights reserved.</p>
+          <p className="text-xs text-zinc-700">Built with React · Tailwind CSS · Framer Motion</p>
+        </div>
       </div>
     </footer>
   );

@@ -1,139 +1,169 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FaBars, FaDownload, FaGithub, FaLinkedin, FaTimes, FaTwitter } from 'react-icons/fa';
+import { FaBars, FaGithub, FaLinkedin, FaTimes } from 'react-icons/fa';
+
+const navItems = [
+  { label: 'About', id: 'about' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Certifications', id: 'certifications' },
+  { label: 'Contact', id: 'contact' },
+];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Track scroll for glass effect
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItems = ['Home', 'About', 'Experience', 'Patents', 'Projects', 'Skills', 'Education', 'Contact'];
+  // Intersection Observer for active section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+    );
+    ['home', ...navItems.map(n => n.id)].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    setMobileOpen(false);
+  };
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-xl md:text-2xl font-bold gradient-text"
+    <>
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+            ? 'py-3 glass border-b border-white/[0.06]'
+            : 'py-5 bg-transparent'
+          }`}
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+          {/* Logo */}
+          <motion.button
+            onClick={() => scrollTo('home')}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-2 group"
           >
-            Aniket Bhagat
-          </motion.div>
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-black"
+              style={{ background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)' }}
+            >
+              AB
+            </div>
+            <span className="text-sm font-semibold text-white hidden sm:block">Aniket Bhagat</span>
+          </motion.button>
 
-          <div className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="hover:text-blue-400 transition-colors duration-200"
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${activeSection === item.id
+                    ? 'text-white bg-white/[0.08]'
+                    : 'text-zinc-500 hover:text-white hover:bg-white/[0.04]'
+                  }`}
               >
-                {item}
-              </motion.a>
+                {item.label}
+              </button>
             ))}
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <motion.a
-              href="/resume.pdf"
-              download
-              target="_blank"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all duration-200"
-            >
-              <FaDownload size={14} />
-              Resume
-            </motion.a>
-            <motion.a
+          {/* Right actions */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
               href="https://github.com/aniketbhagat2"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.2, rotate: 360 }}
-              transition={{ duration: 0.3 }}
-              className="text-gray-400 hover:text-white"
+              className="text-zinc-500 hover:text-white transition-colors duration-200"
+              aria-label="GitHub"
             >
-              <FaGithub size={20} />
-            </motion.a>
-            <motion.a
+              <FaGithub size={18} />
+            </a>
+            <a
               href="https://linkedin.com/in/aniketbhagat16"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.2 }}
-              className="text-gray-400 hover:text-white"
+              className="text-zinc-500 hover:text-white transition-colors duration-200"
+              aria-label="LinkedIn"
             >
-              <FaLinkedin size={20} />
-            </motion.a>
-            <motion.a
-              href="https://twitter.com"
+              <FaLinkedin size={18} />
+            </a>
+            <a
+              href="/Resume.pdf"
+              download
               target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.2 }}
-              className="text-gray-400 hover:text-white"
+              className="btn-primary py-1.5 px-4 text-xs"
             >
-              <FaTwitter size={20} />
-            </motion.a>
+              Resume
+            </a>
           </div>
 
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-400 hover:text-white focus:outline-none"
-            >
-              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden glass-effect rounded-lg mt-2 p-4"
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileOpen(v => !v)}
+            className="md:hidden text-zinc-400 hover:text-white transition-colors"
+            aria-label="Toggle menu"
           >
-            {navItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="block py-2 hover:text-blue-400 transition-colors duration-200"
-                onClick={() => setIsOpen(false)}
-              >
-                {item}
-              </a>
-            ))}
-            <div className="pt-4 border-t border-gray-700">
-              <motion.a
-                href="/resume.pdf"
-                download
-                target="_blank"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                className="block w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium text-center transition-all duration-200"
-                onClick={() => setIsOpen(false)}
-              >
-                Download Resume
-              </motion.a>
+            {mobileOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+          </button>
+        </div>
+      </motion.nav>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-[60px] left-4 right-4 z-40 rounded-2xl glass border border-white/[0.08] p-4 md:hidden"
+          >
+            <div className="flex flex-col gap-1">
+              {navItems.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollTo(item.id)}
+                  className={`text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200 ${activeSection === item.id
+                      ? 'text-white bg-white/[0.08]'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                    }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+              <div className="pt-3 mt-2 border-t border-white/[0.06] flex items-center gap-3">
+                <a href="https://github.com/aniketbhagat2" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white"><FaGithub size={18} /></a>
+                <a href="https://linkedin.com/in/aniketbhagat16" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white"><FaLinkedin size={18} /></a>
+                <a href="/Resume.pdf" download target="_blank" className="btn-primary py-1.5 px-4 text-xs ml-auto">Download Resume</a>
+              </div>
             </div>
           </motion.div>
         )}
-      </div>
-    </motion.nav>
+      </AnimatePresence>
+    </>
   );
 };
 

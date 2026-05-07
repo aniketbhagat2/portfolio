@@ -1,173 +1,163 @@
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import {
+  FaCode, FaDatabase, FaGithub, FaJs, FaNodeJs, FaPython,
+  FaReact, FaServer, FaTools
+} from 'react-icons/fa';
+import {
+  SiExpress, SiMongodb, SiMysql, SiPostman,
+  SiTailwindcss, SiVite
+} from 'react-icons/si';
+
+const categories = [
+  {
+    id: 'frontend',
+    label: 'Frontend',
+    icon: <FaReact size={14} />,
+    skills: [
+      { name: 'React.js', icon: <FaReact className="text-[#61DAFB]" />, level: 'Expert' },
+      { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-[#38BDF8]" />, level: 'Expert' },
+      { name: 'JavaScript', icon: <FaJs className="text-[#F7DF1E]" />, level: 'Expert' },
+      { name: 'HTML5 / CSS3', icon: <FaCode className="text-[#E34F26]" />, level: 'Expert' },
+      { name: 'Ant Design', icon: <FaCode className="text-[#1890FF]" />, level: 'Advanced' },
+    ],
+  },
+  {
+    id: 'backend',
+    label: 'Backend',
+    icon: <FaServer size={14} />,
+    skills: [
+      { name: 'Node.js', icon: <FaNodeJs className="text-[#68A063]" />, level: 'Expert' },
+      { name: 'Express.js', icon: <SiExpress className="text-zinc-300" />, level: 'Expert' },
+      { name: 'REST APIs', icon: <FaServer className="text-blue-400" />, level: 'Expert' },
+      { name: 'JWT Auth', icon: <FaServer className="text-purple-400" />, level: 'Advanced' },
+      { name: 'Python', icon: <FaPython className="text-[#3776AB]" />, level: 'Intermediate' },
+    ],
+  },
+  {
+    id: 'database',
+    label: 'Database',
+    icon: <FaDatabase size={14} />,
+    skills: [
+      { name: 'MongoDB', icon: <SiMongodb className="text-[#47A248]" />, level: 'Expert' },
+      { name: 'MySQL', icon: <SiMysql className="text-[#4479A1]" />, level: 'Advanced' },
+    ],
+  },
+  {
+    id: 'tools',
+    label: 'Tools',
+    icon: <FaTools size={14} />,
+    skills: [
+      { name: 'Git / GitHub', icon: <FaGithub className="text-zinc-300" />, level: 'Expert' },
+      { name: 'Postman', icon: <SiPostman className="text-[#EF5B25]" />, level: 'Advanced' },
+      { name: 'Vite', icon: <SiVite className="text-[#646CFF]" />, level: 'Advanced' },
+    ],
+  },
+  {
+    id: 'concepts',
+    label: 'Core Concepts',
+    icon: <FaCode size={14} />,
+    skills: [
+      { name: 'DBMS', icon: <FaDatabase className="text-indigo-400" />, level: 'Advanced' },
+      { name: 'OOPs', icon: <FaCode className="text-blue-400" />, level: 'Advanced' },
+      { name: 'MVC Architecture', icon: <FaCode className="text-purple-400" />, level: 'Advanced' },
+      { name: 'API Integration', icon: <FaServer className="text-emerald-400" />, level: 'Expert' },
+      { name: 'SDLC', icon: <FaCode className="text-zinc-400" />, level: 'Advanced' },
+    ],
+  },
+];
+
+const levelColors = {
+  Expert: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
+  Advanced: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
+  Intermediate: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
+};
 
 const Skills = () => {
-  const skills = {
-    "Programming Languages": [
-      { name: "JavaScript", level: "Expert", icon: "🟨", description: "ES6+, async/await, modern patterns" },
-      { name: "Python", level: "Advanced", icon: "�", description: "Data analysis, automation, scripting" },
-      { name: "HTML/CSS", level: "Expert", icon: "�", description: "Semantic HTML5, Ant Design, Tailwind CSS" }
-    ],
-    "Frontend Development": [
-      { name: "React.js", level: "Expert", icon: "⚛️", description: "Hooks, Context API, component architecture" },
-      { name: "Node.js", level: "Expert", icon: "🟢", description: "Express.js, RESTful APIs, middleware" },
-      { name: "JWT Authentication", level: "Advanced", icon: "�", description: "Secure authentication, authorization systems" }
-    ],
-    "Databases & Analytics": [
-      { name: "MongoDB", level: "Advanced", icon: "🍃", description: "MERN stack, aggregation pipelines" },
-      { name: "MySQL", level: "Advanced", icon: "�", description: "Relational database design, optimization" },
-      { name: "Tableau", level: "Intermediate", icon: "📊", description: "Data visualization, dashboard creation" },
-      { name: "PowerBI", level: "Intermediate", icon: "�", description: "Business intelligence, reporting" }
-    ],
-    "Tools & Technologies": [
-      { name: "Git/GitHub", level: "Expert", icon: "📦", description: "Version control, collaboration, CI/CD" },
-      { name: "Excel", level: "Advanced", icon: "📊", description: "Data analysis, pivot tables, formulas" },
-      { name: "Figma", level: "Intermediate", icon: "🎨", description: "UI/UX design, prototyping, wireframing" }
-    ],
-    "Core Concepts": [
-      { name: "Data Structures & Algorithms", level: "Advanced", icon: "🧮", description: "Problem solving, optimization" },
-      { name: "OOP", level: "Advanced", icon: "🏗️", description: "Object-oriented programming principles" },
-      { name: "DBMS", level: "Advanced", icon: "🗄️", description: "Database management systems" },
-      { name: "MVC Architecture", level: "Advanced", icon: "🏛️", description: "Model-View-Controller pattern" },
-      { name: "API Integration", level: "Expert", icon: "🔌", description: "RESTful APIs, third-party integrations" },
-      { name: "SDLC", level: "Advanced", icon: "🔄", description: "Software Development Lifecycle" }
-    ],
-    "Soft Skills": [
-      { name: "Leadership", level: "Expert", icon: "👥", description: "Team management, project coordination" },
-      { name: "Public Speaking", level: "Advanced", icon: "�", description: "Presentations, technical communication" },
-      { name: "Time Management", level: "Expert", icon: "⏰", description: "Project planning, deadline management" },
-      { name: "Community Management", level: "Advanced", icon: "🌟", description: "User engagement, community building" }
-    ]
-  };
+  const [active, setActive] = useState('frontend');
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
-  const getLevelColor = (level) => {
-    switch(level) {
-      case 'Expert': return 'text-green-400 bg-green-400/10 border-green-400/30';
-      case 'Advanced': return 'text-blue-400 bg-blue-400/10 border-blue-400/30';
-      case 'Intermediate': return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30';
-      default: return 'text-gray-400 bg-gray-400/10 border-gray-400/30';
-    }
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const categoryVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const skillVariants = {
-    hidden: { x: -20, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut"
-      }
-    }
-  };
+  const current = categories.find(c => c.id === active);
 
   return (
-    <section id="skills" className="py-20 bg-gray-800/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="section" ref={ref}>
+      <div className="section-inner">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="mb-10"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Technical <span className="gradient-text">Skills</span>
+          <div className="section-tag">Skills</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            Technical{' '}
+            <span className="gradient-text">Expertise</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full mb-4" />
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            A comprehensive overview of my technical expertise across different domains of web development.
-          </p>
         </motion.div>
 
+        {/* Category Tabs */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-8"
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="flex flex-wrap gap-2 mb-8"
         >
-          {Object.entries(skills).map(([category, categorySkills]) => (
-            <motion.div
-              key={category}
-              variants={categoryVariants}
-              className="professional-card p-6"
+          {categories.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActive(cat.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                active === cat.id
+                  ? 'text-white border border-indigo-500/40'
+                  : 'text-zinc-500 hover:text-zinc-300 border border-transparent'
+              }`}
+              style={
+                active === cat.id
+                  ? { background: 'rgba(99,102,241,0.12)' }
+                  : { background: 'rgba(255,255,255,0.03)' }
+              }
             >
-              <h3 className="text-2xl font-bold mb-6 gradient-text">{category}</h3>
-              <div className="space-y-3">
-                {categorySkills.map((skill, index) => (
-                  <motion.div
-                    key={skill.name}
-                    variants={skillVariants}
-                    custom={index}
-                    whileHover={{ scale: 1.02, x: 5 }}
-                    className="professional-card p-4 border-l-4 hover:border-l-blue-400 transition-all duration-300 cursor-pointer"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl">{skill.icon}</div>
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-semibold text-gray-200">{skill.name}</h4>
-                          <span className={`text-xs px-2 py-1 rounded-full border ${getLevelColor(skill.level)}`}>
-                            {skill.level}
-                          </span>
-                        </div>
-                        <p className="text-sm text-gray-400 leading-relaxed">
-                          {skill.description}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+              {cat.icon}
+              {cat.label}
+            </button>
           ))}
         </motion.div>
 
+        {/* Skill cards */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 text-center"
+          key={active}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          <h3 className="text-2xl font-bold mb-8">Additional Technologies</h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              "RESTful APIs", "GraphQL", "WebSocket", "Redux", "Context API",
-              "Jest", "Cypress", "Webpack", "Vite", "CI/CD", "Agile", "Scrum"
-            ].map((tech) => (
-              <motion.span
-                key={tech}
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="glass-effect px-4 py-2 rounded-full text-sm font-medium hover:bg-white/20 transition-all duration-300"
+          {current.skills.map((skill, i) => (
+            <motion.div
+              key={skill.name}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.06 }}
+              whileHover={{ y: -3 }}
+              className="card card-glow p-4 flex items-center gap-4"
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
+                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
               >
-                {tech}
-              </motion.span>
-            ))}
-          </div>
+                {skill.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white truncate">{skill.name}</p>
+                <span
+                  className={`text-[10px] px-2 py-0.5 rounded-full border font-medium ${levelColors[skill.level]}`}
+                >
+                  {skill.level}
+                </span>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>

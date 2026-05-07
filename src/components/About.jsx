@@ -1,130 +1,124 @@
-import { motion } from 'framer-motion';
-import { FaCloud, FaCode, FaDatabase, FaMobile } from 'react-icons/fa';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+import { FaCode, FaDatabase, FaLayerGroup, FaRocket } from 'react-icons/fa';
+
+const highlights = [
+  {
+    icon: <FaCode className="text-blue-400" size={20} />,
+    title: 'Full-Stack Engineering',
+    desc: 'End-to-end MERN development from REST APIs to React dashboards',
+  },
+  {
+    icon: <FaDatabase className="text-purple-400" size={20} />,
+    title: 'Backend & APIs',
+    desc: 'Node.js + Express APIs, JWT auth, MongoDB schema optimization',
+  },
+  {
+    icon: <FaLayerGroup className="text-indigo-400" size={20} />,
+    title: 'SaaS Products',
+    desc: 'CRM platforms, employee management, LMS — real production systems',
+  },
+  {
+    icon: <FaRocket className="text-emerald-400" size={20} />,
+    title: 'IoT & Innovation',
+    desc: 'Patent-filed ResQFire IoT system for real-time fire detection',
+  },
+];
 
 const About = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  };
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
+  const variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i) => ({
+      opacity: 1,
       y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+      transition: { duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] },
+    }),
   };
-
-  const features = [
-    {
-      icon: <FaCode className="text-3xl text-blue-400" />,
-      title: "Frontend Development",
-      description: "Creating responsive, interactive user interfaces with modern frameworks"
-    },
-    {
-      icon: <FaDatabase className="text-3xl text-green-400" />,
-      title: "Backend Development",
-      description: "Building robust server-side applications and RESTful APIs"
-    },
-    {
-      icon: <FaMobile className="text-3xl text-purple-400" />,
-      title: "Mobile Responsive",
-      description: "Ensuring seamless experience across all devices and screen sizes"
-    },
-    {
-      icon: <FaCloud className="text-3xl text-pink-400" />,
-      title: "Cloud Deployment",
-      description: "Deploying and managing applications on cloud platforms"
-    }
-  ];
 
   return (
-    <section id="about" className="py-20 bg-gray-800/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="section-divider"></div>
+    <section id="about" className="section">
+      <div className="section-inner" ref={ref}>
+        {/* Tag */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          custom={0} variants={variants}
+          initial="hidden" animate={isInView ? 'visible' : 'hidden'}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            About <span className="gradient-text">Me</span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full" />
+          <div className="section-tag">About Me</div>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-12 items-center mb-16"
-        >
-          <motion.div variants={itemVariants}>
-            <h3 className="text-2xl font-bold mb-4">
-              Turning Ideas Into Digital Reality
-            </h3>
-            <p className="text-gray-300 mb-4 leading-relaxed">
-              I'm <span className="gradient-text font-semibold">Aniket Bhagat</span>, a passionate full-stack developer 
-              with expertise in modern web technologies. Currently based in Pune, Maharashtra, I love creating 
-              elegant solutions to complex problems and building applications that make a positive impact on users' lives.
-            </p>
-            <p className="text-gray-300 mb-4 leading-relaxed">
-              With a strong foundation in both frontend and backend development, I can take a project 
-              from concept to deployment. I'm always eager to learn new technologies and stay updated 
-              with the latest industry trends. Originally from Ujjain, Madhya Pradesh, I bring diverse 
-              experiences to my development work.
-            </p>
-            <p className="text-gray-300 leading-relaxed">
-              When I'm not coding, you can find me exploring new technologies, contributing to open-source 
-              projects, or sharing knowledge with the developer community. I believe in writing clean, 
-              maintainable code and creating exceptional user experiences.
-            </p>
-            
-            <motion.div 
-              className="mt-6 p-4 glass-effect rounded-lg"
-              whileHover={{ scale: 1.02 }}
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          {/* Left: bio */}
+          <motion.div
+            custom={1} variants={variants}
+            initial="hidden" animate={isInView ? 'visible' : 'hidden'}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
+              Building products that{' '}
+              <span className="gradient-text">make an impact</span>
+            </h2>
+
+            <div className="space-y-4 text-zinc-400 leading-relaxed text-[15px]">
+              <p>
+                I'm a Full Stack MERN Developer currently building enterprise-grade products at{' '}
+                <span className="text-zinc-200 font-medium">Prushal Technology Pvt. Ltd.</span> in Pune.
+                I specialize in crafting scalable web applications and RESTful APIs that solve real business problems.
+              </p>
+              <p>
+                My stack revolves around <span className="text-zinc-300">React.js, Node.js, Express</span>, and <span className="text-zinc-300">MongoDB</span> —
+                but I'm equally comfortable with MySQL, Tailwind CSS, JWT authentication, and building complete CRM and LMS platforms from scratch.
+              </p>
+              <p>
+                From designing MongoDB schemas to shipping responsive React dashboards, I take ownership of the full product lifecycle —
+                the way engineers at top SaaS companies do.
+              </p>
+            </div>
+
+            {/* Quick facts */}
+            <div
+              className="mt-8 p-4 rounded-xl space-y-2 text-sm"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
             >
-              <h4 className="text-lg font-semibold mb-2 text-blue-400">Quick Facts</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-300">
-                <div>📧 bhagataniket11@gmail.com</div>
-                <div>📱 +91 9644029869</div>
-                <div>📍 Currently in Pune, Maharashtra</div>
-                <div>🏠 From Ujjain, Madhya Pradesh</div>
-              </div>
-            </motion.div>
+              {[
+                ['📍', 'Location', 'Pune, Maharashtra (Open to relocation)'],
+                ['✉️', 'Email', 'bhagataniket11@gmail.com'],
+                ['🏢', 'Current', 'Prushal Technology Pvt. Ltd. · Trainee'],
+                ['🎓', 'Education', 'B.Tech in Computer Science and Engineering'],
+              ].map(([emoji, key, value]) => (
+                <div key={key} className="flex items-center gap-3">
+                  <span>{emoji}</span>
+                  <span className="text-zinc-600 w-20 flex-shrink-0">{key}</span>
+                  <span className="text-zinc-300">{value}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="grid grid-cols-2 gap-6">
-            {features.map((feature, index) => (
+          {/* Right: highlight cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {highlights.map((item, i) => (
               <motion.div
-                key={index}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="glass-effect p-6 rounded-lg text-center hover:bg-white/15 transition-all duration-300"
+                key={item.title}
+                custom={i + 2} variants={variants}
+                initial="hidden" animate={isInView ? 'visible' : 'hidden'}
+                whileHover={{ y: -4 }}
+                className="card card-glow p-5"
               >
-                <div className="flex justify-center mb-4">
-                  {feature.icon}
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                >
+                  {item.icon}
                 </div>
-                <h4 className="text-lg font-semibold mb-2">{feature.title}</h4>
-                <p className="text-sm text-gray-400">{feature.description}</p>
+                <h4 className="text-sm font-semibold text-white mb-2">{item.title}</h4>
+                <p className="text-xs text-zinc-500 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
-          </motion.div>
-        </motion.div>
-
-              </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

@@ -1,235 +1,182 @@
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { FaArrowDown, FaDownload, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaDownload, FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt } from 'react-icons/fa';
+
+const techBadges = [
+  { label: 'React.js', color: '#61DAFB' },
+  { label: 'Node.js', color: '#68A063' },
+  { label: 'MongoDB', color: '#47A248' },
+  { label: 'Express.js', color: '#a1a1aa' },
+  { label: 'JavaScript', color: '#F7DF1E' },
+  { label: 'Tailwind CSS', color: '#38BDF8' },
+  { label: 'JWT Auth', color: '#6366f1' },
+  { label: 'REST APIs', color: '#8b5cf6' },
+];
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
 
 const Hero = () => {
-  const [text, setText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const heroRef = useRef(null);
-
-  const roles = ['Full Stack Developer', 'MERN Expert', 'UI/UX Designer', 'Problem Solver'];
-  
-  // Parallax scroll effects
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  
-  const yText = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const yStars = useTransform(scrollYProgress, [0, 1], [0, 300]);
-  const opacityStars = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scaleStars = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
-  
-  // Mouse tracking for 3D effect
-  const springConfig = { damping: 25, stiffness: 300 };
-  const mouseX = useSpring(mousePosition.x, springConfig);
-  const mouseY = useSpring(mousePosition.y, springConfig);
-  
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: (e.clientX - rect.left - rect.width / 2) / 50,
-          y: (e.clientY - rect.top - rect.height / 2) / 50
-        });
-      }
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-  
-  useEffect(() => {
-    const handleType = () => {
-      const i = loopNum % roles.length;
-      const fullText = roles[i];
-
-      setText(isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1));
-
-      setTypingSpeed(isDeleting ? 30 : 150);
-
-      if (!isDeleting && text === fullText) {
-        setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && text === '') {
-        setIsDeleting(false);
-        setLoopNum(loopNum + 1);
-      }
-    };
-
-    const timer = setTimeout(handleType, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, typingSpeed]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const particles = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 1,
-    duration: Math.random() * 30 + 15,
-    delay: Math.random() * 5,
-    color: ['#3b82f6', '#8b5cf6', '#10b981'][Math.floor(Math.random() * 3)]
-  }));
-
   return (
-    <section ref={heroRef} id="home" className="min-h-screen flex items-center justify-center relative pt-16">
-      {/* Main content */}
+    <section
+      id="home"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-16 px-4 overflow-hidden"
+    >
+      {/* Background: dot grid */}
+      <div
+        className="absolute inset-0 dot-grid opacity-40 pointer-events-none"
+        style={{ backgroundSize: '28px 28px' }}
+      />
+
+      {/* Gradient orbs */}
+      <div
+        className="orb w-[500px] h-[500px] -top-32 -left-32 opacity-[0.12]"
+        style={{ background: 'radial-gradient(circle, #3b82f6, transparent 70%)' }}
+      />
+      <div
+        className="orb w-[400px] h-[400px] -bottom-32 -right-32 opacity-[0.10]"
+        style={{ background: 'radial-gradient(circle, #8b5cf6, transparent 70%)' }}
+      />
+
+      {/* Content */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 relative"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 max-w-4xl mx-auto text-center"
       >
-        {/* Professional title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-8"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 md:mb-8 tracking-tight">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3">
-              <span className="text-gray-300 font-light">Hi, I'm</span>
-              <span className="gradient-text font-bold">
-                Aniket Bhagat
-              </span>
-            </div>
-          </h1>
+        {/* Status badge */}
+        <motion.div variants={itemVariants} className="flex justify-center mb-6">
+          <div className="section-tag">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            Available for opportunities · Open to relocation
+          </div>
         </motion.div>
 
-        {/* Professional headline and tagline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mb-8"
+        {/* Main heading */}
+        <motion.h1
+          variants={itemVariants}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-[84px] font-black tracking-tighter leading-none mb-6"
         >
-          <h2 className="text-3xl md:text-4xl text-gray-200 mb-4 font-bold">
-            Full Stack Developer | Data Analyst
+          <span className="text-white">Hi, I'm </span>
+          <span className="gradient-text">Aniket Bhagat</span>
+        </motion.h1>
+
+        {/* Role */}
+        <motion.div variants={itemVariants} className="mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-zinc-300 mb-3">
+            Full Stack MERN Developer
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12 font-medium">
-            Full Stack MERN Developer with hands-on experience building scalable web applications and RESTful APIs.
-            Currently developing enterprise solutions at Prushal Technology with expertise in React.js, Node.js, Express.js, and MongoDB.
-            Strong foundation in Data Structures, DBMS, and certified in Generative AI fundamentals.
+          <p className="text-base text-zinc-500 max-w-2xl mx-auto leading-relaxed">
+            Building scalable SaaS applications and RESTful APIs at{' '}
+            <span className="text-zinc-300 font-medium">Prushal Technology Pvt. Ltd.</span>
+            {' '}— crafting end-to-end products with React, Node.js, Express & MongoDB.
           </p>
         </motion.div>
 
-        {/* Professional CTA buttons */}
+        {/* Location */}
+        <motion.div variants={itemVariants} className="flex items-center justify-center gap-1.5 text-zinc-500 text-sm mb-10">
+          <FaMapMarkerAlt size={12} />
+          <span>Pune, India</span>
+        </motion.div>
+
+        {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mt-8 mb-12"
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14"
         >
-          <motion.a
-            href="/resume.pdf"
-            download
-            target="_blank"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            className="professional-button bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 font-semibold focus-ring flex items-center justify-center gap-2"
-          >
-            <FaDownload />
-            View Resume
-          </motion.a>
-          
-          <motion.a
+          <a
             href="#projects"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            className="professional-button border-2 border-gray-600 hover:border-gray-500 hover:bg-gray-800 text-gray-300 px-8 py-3 font-semibold focus-ring"
+            onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
+            className="btn-primary text-sm"
           >
             View Projects
-          </motion.a>
+          </a>
+          <a
+            href="/Resume.pdf"
+            download
+            target="_blank"
+            className="btn-secondary text-sm"
+          >
+            <FaDownload size={13} />
+            Download Resume
+          </a>
+          <a
+            href="#contact"
+            onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+            className="btn-secondary text-sm"
+          >
+            <FaEnvelope size={13} />
+            Contact Me
+          </a>
         </motion.div>
 
-        {/* Clean tech stack */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex justify-center flex-wrap gap-3 mb-12"
-        >
-          {['React', 'Node.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Express'].map((skill, index) => (
-            <motion.span
-              key={skill}
-              whileHover={{ scale: 1.05 }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 + index * 0.1 }}
-              className="professional-card px-4 py-2 text-sm font-medium text-gray-300 border-gray-700/50"
-            >
-              {skill}
-            </motion.span>
-          ))}
-        </motion.div>
-
-        {/* Professional social links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="flex justify-center gap-6"
-        >
+        {/* Social links */}
+        <motion.div variants={itemVariants} className="flex items-center justify-center gap-4 mb-14">
           {[
-            { icon: FaGithub, href: "https://github.com/aniketbhagat2" },
-            { icon: FaLinkedin, href: "https://linkedin.com/in/aniketbhagat16" },
-            { icon: FaEnvelope, href: "mailto:bhagataniket11@gmail.com" }
-          ].map((social, index) => (
+            { icon: FaGithub, href: 'https://github.com/aniketbhagat2', label: 'GitHub' },
+            { icon: FaLinkedin, href: 'https://linkedin.com/in/aniketbhagat16', label: 'LinkedIn' },
+            { icon: FaEnvelope, href: 'mailto:bhagataniket11@gmail.com', label: 'Email' },
+          ].map(({ icon: Icon, href, label }) => (
             <motion.a
-              key={index}
-              href={social.href}
+              key={label}
+              href={href}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
+              aria-label={label}
+              whileHover={{ y: -2, scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="text-gray-400 hover:text-gray-200 transition-colors duration-200"
+              className="w-9 h-9 rounded-xl flex items-center justify-center text-zinc-500 hover:text-white transition-colors"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
             >
-              <social.icon size={24} />
+              <Icon size={16} />
             </motion.a>
           ))}
         </motion.div>
+
+        {/* Floating tech badges */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs text-zinc-600 mb-4 uppercase tracking-widest">Tech Stack</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {techBadges.map((badge, i) => (
+              <motion.span
+                key={badge.label}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8 + i * 0.05, duration: 0.3 }}
+                whileHover={{ scale: 1.08, y: -2 }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: '#a1a1aa',
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: badge.color }}
+                />
+                {badge.label}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
 
-      {/* Subtle scroll indicator */}
+      {/* Scroll indicator */}
       <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 6, 0] }}
+        transition={{ delay: 1.5, duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-zinc-600"
       >
-        <a
-          href="#about"
-          className="text-gray-500 hover:text-gray-300 transition-colors duration-200 flex flex-col items-center gap-1"
-        >
-          <FaArrowDown size={20} />
-          <span className="text-xs">Scroll</span>
-        </a>
+        <div className="w-px h-8 rounded-full" style={{ background: 'linear-gradient(to bottom, transparent, #3b82f6)' }} />
+        <span className="text-[10px] tracking-widest uppercase">Scroll</span>
       </motion.div>
     </section>
   );
