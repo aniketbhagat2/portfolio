@@ -101,11 +101,12 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div
-          className="pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-3"
+          className="pt-6 border-t flex items-center justify-center text-center"
           style={{ borderColor: 'rgba(255,255,255,0.06)' }}
         >
-          <p className="text-xs text-zinc-600">© {year} Aniket Bhagat · All rights reserved.</p>
-          <p className="text-xs text-zinc-700">Built with React · Tailwind CSS · Framer Motion</p>
+          <p className="text-xs text-zinc-600">
+            © {year} Aniket Bhagat · All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
